@@ -16,27 +16,36 @@ function SignUp(log,pas,email){
             if(err) throw err
         });
         
-        console.log(1)
         let pep = new User({
         login:log,
         password:createHash(pas),
         email:email
         });
 
+        pep.save()
+        resolve(1)
+    })
+}
+
+function userCheck(log){
+    return new Promise((resolve,reject)=>{
+        mongo.connect(conf.local,{ useNewUrlParser: true },(err)=>{
+            if(err) throw err
+        });
+      
         User.find({login:log},(err,doc)=>{
             if(err) throw err;
             if(doc.length>0){
-                reject('Такой пользователь уже существует')
-                console.log('УЖЕ ЕСТЬ');
+                reject()
             }
             else {
-                pep.save()
-                console.log('SAVE')
-                resolve(1)
+                resolve()
            }
-        });
-    })
+
+})
+})
 }
+
 
 function logIn(login,pass){
     return new Promise((resolve,reject)=>{
@@ -65,3 +74,4 @@ function logIn(login,pass){
 }
 module.exports.SignUp = SignUp;
 module.exports.logIn = logIn;
+module.exports.userCheck = userCheck;

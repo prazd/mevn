@@ -17,7 +17,6 @@ app.get('/',(req,res)=>{
 })
 
 app.post('/signup',(req,res)=>{
-    console.log(req.body)
     res.header("Access-Control-Allow-Origin", '*')
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     let registration = mongo.SignUp(req.body.user,req.body.pass,req.body.email)
@@ -27,13 +26,18 @@ app.post('/signup',(req,res)=>{
                     res.send(JSON.stringify({mes:1}))
                    }
                    })
-               .catch((err)=>{
-                   res.send(JSON.stringify({mes:2}))
-               })
 });
 
+app.post('/check',(req,res)=>{
+    res.header("Access-Control-Allow-Origin", '*')
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    let check = mongo.userCheck(req.body.login)
+        check 
+             .then(()=>{res.send(JSON.stringify({mes:0}))})
+             .catch(()=>{res.send(JSON.stringify({mes:1}))})
+})
+
 app.post('/login',(req,res)=>{
-    console.log(req.body)
     res.header("Access-Control-Allow-Origin", '*')
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     let login = mongo.logIn(req.body.login,req.body.password)

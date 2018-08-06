@@ -26,9 +26,16 @@
       <input v-model="input.pass" type="password" required>
       <span class="bar"></span>
       <label>Password</label>
-    </div>    
+    </div>   
+
+    <div class="group">      
+      <input v-model="input.spass" type="password" required>
+      <span class="bar"></span>
+      <label>Repeat password</label>
+    </div>  
+
   </form>
-   <button type="button" v-on:click="reg()">Login</button>
+   <button class="reg" type="submit" v-on:click="reg()">Done</button>
 
 </div>
   </div>
@@ -46,13 +53,13 @@ export default {
         email:"",
         user:"",
         password:"",
-        masInfo:"",
-        userInDb:""
+        masInfo:""
       },
       input:{
     user:"",
     email:"",
-    pass:""
+    pass:"",
+    spass:""
   },
     }
   },
@@ -64,37 +71,54 @@ export default {
       this.info.password = ""
       this.info.masInfo = ""
 
-       axios.post('http://localhost/signup',{user:this.input.user,pass:this.input.pass,email:this.input.email})
-          .then((res)=>{
-            if(res.data.mes===1)
-              this.info.userInDb = false
-            else if(res.data.mes===2)
-              this.info.userInDb = true
-            })
+
+      axios.post('http://localhost/check',{login:this.input.user})
+      .then((res)=>{
+        if(res.data.mes===1){
+          this.info.user = "Пользователь есть в бд"
+        }
+        else if(res.data.mes===0){
+          this.info.user = ""
+        }
+      })
+     
 
       let check = null
 
-      if(this.input.pass.length===0 || this.input.email.length===0){
+      if(this.input.pass.length===0 || this.input.email.length===0 || this.input.user.length===0){
         this.info.masInfo = "Заполните все указанные поля"
         check++;
         return;
       }
-      if(this.input.email.indexOf('@')===-1 ){
+
+      if(this.input.email.indexOf('@')===-1 || this.input.email.indexOf('.ru')===-1){
         this.info.email = "Введите правильно адрес почты"
         check++;
       }
+
       if(this.input.pass.length<8){
         this.info.password = "Пароль должен иметь длинну минимум в 8 символов"
         check++
       }
-      if(this.info.userInDb===true){
-        this.info.user = "Пользователь с таким ником уже есть"
+
+      if(this.input.pass!==this.input.spass){
+        this.info.password = "Пароли не совпадают"
         check++;
       }
-      if(check!=null){
+
+      if(check!==null){
         return
       }
-      this.$router.push('/login')
+
+      else{
+        axios.post('http://localhost/signup',{user:this.input.user,pass:this.input.pass,email:this.input.email})
+          .then((res)=>{
+            if(res.data.mes===1){
+              this.$router.push('/login')
+            }            
+        })
+      }
+
     }
   }
 }
@@ -206,5 +230,48 @@ a {
   }
 .info{
   color: red;
+}
+/* .reg{
+  font-weight: 700;
+  color: white;
+  text-decoration: none;
+  padding: .8em 1em calc(.8em + 3px);
+  border-radius: 3px;
+  background: rgb(64,199,129);
+  box-shadow: 0 -3px rgb(53,167,110) inset;
+  transition: 0.2s;
+} 
+reg:hover { background: rgb(53, 167, 110); }
+reg:active {
+  background: rgb(33,147,90);
+  box-shadow: 0 3px rgb(33,147,90) inset;
+
+} */
+
+.reg{
+  text-decoration: none;
+  outline: none;
+  display: inline-block;
+  width: 140px;
+  height: 45px;
+  line-height: 45px;
+  border-radius: 45px;
+  margin: 10px 20px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 3px;
+  font-weight: 600;
+  color: #524f4e;
+  background: white;
+  box-shadow: 0 8px 15px rgba(0,0,0,.1);
+  transition: .3s;
+}
+.reg:hover {
+  background: #2EE59D;
+  box-shadow: 0 15px 20px rgba(46,229,157,.4);
+  color: white;
+  transform: translateY(-7px);
 }
 </style>

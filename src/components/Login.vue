@@ -3,7 +3,8 @@
     <h1>{{ msg }}</h1>
   <div class="container">
   <form>
-       <p>{{ info }}</p>
+       <p class="info">{{ info }}</p>
+       <br><br>
        <div class="group">      
       <input v-model="input.login" type="text" required>
       <span class="bar"></span>
@@ -17,7 +18,7 @@
     </div>    
   </form>
 
-      <button type="button"  v-on:click="login()">Login</button>
+      <button class="log" type="button"  v-on:click="login()">Login</button>
   </div>
   </div>
 </template>
@@ -40,7 +41,22 @@ export default {
 
   methods:{
     login(){
-    
+
+      let check = null
+      if(this.input.login.length===0 && this.input.password.length===0){
+        this.info = "Введите логин и пароль"
+        return
+      }
+
+      if(this.input.login.length===0){
+        this.info = "Введите логин"
+        return
+      }
+
+      if(this.input.password.length===0){
+        this.info = "Введите пароль"
+        return
+      }
       axios.post('http://localhost/login',{
         login:this.input.login,
         password:this.input.password
@@ -77,6 +93,7 @@ li {
 a {
   color: #42b983;
 }
+
 /* basic stylings ------------------------------------------ */
 .container {
     font-family: Open Sans Condensed;
@@ -165,4 +182,55 @@ a {
   input:focus ~ .bar:after {
     width: 50%;
   }
+.info{
+  color: red;
+}
+.reg{
+  font-weight: 700;
+  color: white;
+  text-decoration: none;
+  padding: .8em 1em calc(.8em + 3px);
+  border-radius: 3px;
+  background: rgb(64,199,129);
+  box-shadow: 0 -3px rgb(53,167,110) inset;
+  transition: 0.2s;
+} 
+reg:hover { background: rgb(53, 167, 110); }
+reg:active {
+  background: rgb(33,147,90);
+  box-shadow: 0 3px rgb(33,147,90) inset;
+
+}
+
+.log {
+  text-decoration: none;
+  outline: none;
+  display: inline-block;
+  width: 140px;
+  height: 45px;
+  line-height: 45px;
+  border-radius: 45px;
+  margin: 10px 20px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 3px;
+  font-weight: 600;
+  color: #524f4e;
+  background: white;
+  box-shadow: 0 8px 15px rgba(0,0,0,.1);
+  transition: .3s;
+}
+.log:hover {
+  background: #2EE59D;
+  box-shadow: 0 15px 20px rgba(46,229,157,.4);
+  color: white;
+  transform: translateY(-7px);
+}
+
+.info{
+  color:red;
+}
+
 </style>
