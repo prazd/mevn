@@ -322,5 +322,4 @@ div#partyInfo {
     visibility:visible;
 }
 
-
 </style>

@@ -35,8 +35,9 @@
     </div>  
 
   </form>
+   <button class="reg" type="submit" v-on:click="back()">Back</button>
    <button class="reg" type="submit" v-on:click="reg()">Done</button>
-
+    
 </div>
   </div>
 </template>
@@ -64,6 +65,9 @@ export default {
     }
   },
   methods:{
+    back(){
+      this.$router.push('/')
+    },
     reg(){
       
       this.info.email = ""

@@ -17,7 +17,7 @@
       <label>Password</label>
     </div>    
   </form>
-
+      <button class="log" type="button"  v-on:click="back()">Back</button>
       <button class="log" type="button"  v-on:click="login()">Login</button>
   </div>
   </div>
@@ -40,6 +40,9 @@ export default {
   },
 
   methods:{
+    back(){
+      this.$router.push('/')
+    },
     login(){
 
       let check = null
