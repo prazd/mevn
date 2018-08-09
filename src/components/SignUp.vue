@@ -1,27 +1,50 @@
 <template>
   <div class="hello">
-
     <h1>{{ msg }}</h1>
     <br><br>
-    <p class="info">{{ info.masInfo }}</p>
+
+    <transition
+    name="custom-classes-transition"
+    enter-active-class="animated tada"
+    leave-active-class="animated bounceOutRight"
+    >
+      <p class="info" v-if="info.masInfo.show">{{ info.masInfo.text }}</p>
+  </transition>
     <br><br>
     <div class="container">
   <form>
-    <p class="info">{{ info.email }}</p>
+      <transition
+    name="custom-classes-transition"
+    enter-active-class="animated tada"
+    leave-active-class="animated bounceOutRight"
+    >
+      <p class="info" v-if="info.email.show">{{ info.email.text }}</p>
+  </transition>
      <div class="group">      
       <input type="text" v-model="input.email" required>
       <span class="bar"></span>
       <label>Email</label>
     </div>
-    
-    <p class="info">{{ info.user }}</p>
+        <transition
+    name="custom-classes-transition"
+    enter-active-class="animated tada"
+    leave-active-class="animated bounceOutRight"
+    >
+      <p class="info" v-if="info.user.show">{{ info.user.text }}</p>
+  </transition>
     <div class="group">      
       <input v-model="input.user" type="text" required>
       <span class="bar"></span>
       <label>Username</label>
     </div>
 
-    <p class="info">{{ info.password }}</p>  
+        <transition
+    name="custom-classes-transition"
+    enter-active-class="animated tada"
+    leave-active-class="animated bounceOutRight"
+    >
+      <p class="info" v-if="info.password.show">{{ info.password.text }}</p>
+  </transition>
     <div class="group">      
       <input v-model="input.pass" type="password" required>
       <span class="bar"></span>
@@ -33,12 +56,10 @@
       <span class="bar"></span>
       <label>Repeat password</label>
     </div>  
-
   </form>
+</div>
    <button class="reg" type="submit" v-on:click="back()">Back</button>
    <button class="reg" type="submit" v-on:click="reg()">Done</button>
-    
-</div>
   </div>
 </template>
 
@@ -50,11 +71,24 @@ export default {
   data () {
     return {
       msg: 'Регистрация',
+      show:false,
       info:{
-        email:"",
-        user:"",
-        password:"",
-        masInfo:""
+        email:{
+          text:"",
+          show:false
+        },
+        user:{
+          text:"",
+          show:false
+        },
+        password:{
+          text:"",
+          show:false
+        },
+        masInfo:{
+          text:"",
+          show:false
+        }
       },
       input:{
     user:"",
@@ -70,44 +104,58 @@ export default {
     },
     reg(){
       
-      this.info.email = ""
-      this.info.user = ""
-      this.info.password = ""
-      this.info.masInfo = ""
+      this.info.email.text = ""
+      this.info.user.text = ""
+      this.info.password.text = ""
+      this.info.password.text = ""
+
+      this.info.masInfo.show = false
+      this.info.email.show = false
+      this.info.user.show = false
+      this.info.password.show = false
+
 
 
       axios.post('http://localhost/check',{login:this.input.user})
       .then((res)=>{
         if(res.data.mes===1){
-          this.info.user = "Пользователь есть в бд"
+          this.info.user.text = "Такой пользователь уже есть"
+          this.info.user.show = true
         }
         else if(res.data.mes===0){
-          this.info.user = ""
+          this.info.user.text = ""
+          this.info.user.show = false
         }
       })
-     
+
 
       let check = null
 
       if(this.input.pass.length===0 || this.input.email.length===0 || this.input.user.length===0){
-        this.info.masInfo = "Заполните все указанные поля"
+        this.info.masInfo.text = "Заполните все указанные поля"
         check++;
+        this.info.masInfo.show = true
         return;
       }
 
       if(this.input.email.indexOf('@')===-1 || this.input.email.indexOf('.ru')===-1){
-        this.info.email = "Введите правильно адрес почты"
+        this.info.email.text = "Введите правильно адрес почты"
         check++;
+        this.info.email.show = true
+        
       }
 
       if(this.input.pass.length<8){
-        this.info.password = "Пароль должен иметь длинну минимум в 8 символов"
-        check++
-      }
+        this.info.password.text = "Пароль должен иметь длинну минимум в 8 символов"
+        check++;
+        this.info.password.show = true
+        
+        }
 
       if(this.input.pass!==this.input.spass){
-        this.info.password = "Пароли не совпадают"
+        this.info.password.text = "Пароли не совпадают"
         check++;
+        this.info.password.show = true
       }
 
       if(check!==null){

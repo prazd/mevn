@@ -1,9 +1,17 @@
 <template>
+<div>
   <div class="hello">
     <h1>{{ msg }}</h1>
   <div class="container">
   <form>
-       <p class="info">{{ info }}</p>
+      <transition
+    name="custom-classes-transition"
+    enter-active-class="animated tada"
+    leave-active-class="animated bounceOutRight"
+  >
+    <p class="info" v-if="show">{{ info }}</p>
+  </transition>
+            
        <br><br>
        <div class="group">      
       <input v-model="input.login" type="text" required>
@@ -17,10 +25,13 @@
       <label>Password</label>
     </div>    
   </form>
-      <button class="log" type="button"  v-on:click="back()">Back</button>
-      <button class="log" type="button"  v-on:click="login()">Login</button>
   </div>
-  </div>
+
+<button class="log" type="button"  v-on:click="back()">Back</button> 
+ <button class="log" type="button"  v-on:click="login()">Login</button>
+      
+</div>
+</div>
 </template>
 
 <script>
@@ -32,6 +43,7 @@ export default {
     return {
       msg: 'Авторизация',
       info:"",
+      show:false,
       input:{
         login:"",
         password:""
@@ -44,20 +56,24 @@ export default {
       this.$router.push('/')
     },
     login(){
+      this.show = false
 
       let check = null
       if(this.input.login.length===0 && this.input.password.length===0){
         this.info = "Введите логин и пароль"
+        this.show = true
         return
       }
 
       if(this.input.login.length===0){
         this.info = "Введите логин"
+        this.show = true
         return
       }
 
       if(this.input.password.length===0){
         this.info = "Введите пароль"
+        this.show = true
         return
       }
       axios.post('http://localhost/login',{
@@ -70,9 +86,12 @@ export default {
         }
         else if(result.data.mes===2){
           this.info = "Неправильный логин или пароль"
+          this.show = true
+          return
         }
         else if(result.data.mes===3){
           this.info = "Такого пользователя нет. Вам нужно зарегистрироваться"
+          this.show = true
         }
       })
     }

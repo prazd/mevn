@@ -1,11 +1,16 @@
 let mongo = require('mongoose'),
     conf = require('./config'),
     User = require('./Schema/User.js'),
-    bcrypt = require('bcrypt')
+    bcrypt = require('bcrypt'),
+    passport = require('passport')
 
 
 var createHash = function(password){
         return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
+}
+
+var isValidPassword = function(user, password){
+    return bCrypt.compareSync(password, user.password);
 }
     
 
@@ -72,6 +77,9 @@ function logIn(login,pass){
         });
         
 }
+
+
+
 module.exports.SignUp = SignUp;
 module.exports.logIn = logIn;
 module.exports.userCheck = userCheck;

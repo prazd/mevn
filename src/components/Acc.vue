@@ -1,6 +1,12 @@
 <template>
   <div class="hello">
     <h1>{{ info }}</h1>
+
+<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark"></nav> -->
+<a href="#" class="navbar-brand">
+  <img src="https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto/gigs/104778812/original/297c4b578930cfd9f9bc21952eb7e74534d60369/develop-nodejs-express-mongodb-vue-application-using-mevn.jpg" alt="logo">
+</a>
+
   </div>
 </template>
 

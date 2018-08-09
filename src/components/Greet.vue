@@ -9,6 +9,7 @@
 <div id="menuBall3" class="menuBall">
      <button class = "ball greenball menuText" v-on:click="Sign_in()">SignIn</button>
 </div>
+
   </div>
 </template>
 
