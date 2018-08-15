@@ -99,24 +99,8 @@ export default {
 }
 
 </script>
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
 
-/* basic stylings ------------------------------------------ */
 .container {
     font-family: Open Sans Condensed;
     width: 400px;
@@ -136,8 +120,7 @@ a {
     color: #ccc;
     display: block;
   }
-  
-  /* form starting stylings ------------------------------- */
+
   .group {
     position: relative;
     margin-bottom: 30px;
@@ -155,7 +138,7 @@ a {
     outline: none;
   }
   
-  /* LABEL ======================================= */
+
   label {
     color: #999;
     font-size: 18px;
@@ -168,14 +151,14 @@ a {
     -webkit-transition: 0.2s ease all;
   }
   
-  /* active state */
+
   input:focus ~ label, input:valid ~ label {
     top: -15px;
     font-size: 14px;
     color: #5264AE;
   }
   
-  /* BOTTOM BARS ================================= */
+
   .bar {
     position: relative;
     display: block;
@@ -199,7 +182,7 @@ a {
     right: 50%;
   }
   
-  /* active state */
+
   input:focus ~ .bar:before,
   input:focus ~ .bar:after {
     width: 50%;

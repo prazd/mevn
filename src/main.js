@@ -7,28 +7,29 @@ import Greet from '@/components/Greet'
 import Login from  '@/components/Login'
 import SignUp from '@/components/SignUp'
 import Acc from '@/components/Acc'
-
-
-const options = {
-  namespace: 'vuejs__'
-};
+import Weather from '@/components/Weather'
+import VInf from '@/components/VInf'
+import NotFound from '@/components/NotFound'
 
 Vue.use(Router);
 Vue.config.productionTip = false;
 
+var log = [false]
 
 let routes = [
   {path:'/',component:Greet},
   {path:'/signup',component:SignUp},
   {path:'/login',component:Login},
-  {path:'/acc',component:Acc}
+  {path:'/acc',component:Acc},
+  {path:'/weth',component:Weather},
+  {path:'/val', component:VInf},
+  {path: '/404', component: NotFound},
+  {path: '*', redirect: '/404'}
 ]
-
 let router = new Router({routes})
 
-
-/* eslint-disable no-new */
 new Vue({
   render: h => h(App),
   router,
+  log
 }).$mount('#app');

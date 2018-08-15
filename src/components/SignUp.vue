@@ -116,19 +116,7 @@ export default {
 
 
 
-      axios.post('http://localhost/check',{login:this.input.user})
-      .then((res)=>{
-        if(res.data.mes===1){
-          this.info.user.text = "Такой пользователь уже есть"
-          this.info.user.show = true
-        }
-        else if(res.data.mes===0){
-          this.info.user.text = ""
-          this.info.user.show = false
-        }
-      })
-
-
+     
       let check = null
 
       if(this.input.pass.length===0 || this.input.email.length===0 || this.input.user.length===0){
@@ -160,41 +148,38 @@ export default {
 
       if(check!==null){
         return
-      }
-
-      else{
-        axios.post('http://localhost/signup',{user:this.input.user,pass:this.input.pass,email:this.input.email})
-          .then((res)=>{
+      }else{
+      axios.post('http://localhost/check',{login:this.input.user})
+      .then(res=>{
+        if(res.data.mes===1){
+          this.info.user.text = "Такой пользователь уже есть"
+          this.info.user.show = true
+        }
+        else if(res.data.mes===0){
+          this.info.user.text = ""
+            axios.post('http://localhost/signup',{user:this.input.user,pass:this.input.pass,email:this.input.email})
+          .then(res=>{
             if(res.data.mes===1){
               this.$router.push('/login')
             }            
         })
+        }
+      })
+
+      }
+
+    
       }
 
     }
   }
-}
-</script>
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
 
-/* basic stylings ------------------------------------------ */
+</script>
+
+<style scoped>
+
 .container {
-    font-family: Open Sans Condensed;
+      font-family: Open Sans Condensed;
     width: 400px;
     margin: 0 auto;
     display: block;
@@ -212,8 +197,7 @@ a {
     color: #ccc;
     display: block;
   }
-  
-  /* form starting stylings ------------------------------- */
+
   .group {
     position: relative;
     margin-bottom: 30px;
@@ -230,8 +214,7 @@ a {
   input:focus {
     outline: none;
   }
-  
-  /* LABEL ======================================= */
+
   label {
     color: #999;
     font-size: 18px;
@@ -243,15 +226,14 @@ a {
     -moz-transition: 0.2s ease all;
     -webkit-transition: 0.2s ease all;
   }
-  
-  /* active state */
+
   input:focus ~ label, input:valid ~ label {
     top: -15px;
     font-size: 14px;
     color: #5264AE;
   }
   
-  /* BOTTOM BARS ================================= */
+ 
   .bar {
     position: relative;
     display: block;
@@ -275,7 +257,7 @@ a {
     right: 50%;
   }
   
-  /* active state */
+
   input:focus ~ .bar:before,
   input:focus ~ .bar:after {
     width: 50%;
@@ -283,28 +265,13 @@ a {
 .info{
   color: red;
 }
-/* .reg{
-  font-weight: 700;
-  color: white;
-  text-decoration: none;
-  padding: .8em 1em calc(.8em + 3px);
-  border-radius: 3px;
-  background: rgb(64,199,129);
-  box-shadow: 0 -3px rgb(53,167,110) inset;
-  transition: 0.2s;
-} 
-reg:hover { background: rgb(53, 167, 110); }
-reg:active {
-  background: rgb(33,147,90);
-  box-shadow: 0 3px rgb(33,147,90) inset;
 
-} */
 
 .reg{
   text-decoration: none;
   outline: none;
   display: inline-block;
-  width: 140px;
+  width: 150px;
   height: 45px;
   line-height: 45px;
   border-radius: 45px;

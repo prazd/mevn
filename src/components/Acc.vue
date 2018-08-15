@@ -1,40 +1,40 @@
 <template>
-  <div class="hello">
-    <h1>{{ info }}</h1>
+    <div class="container">
+   <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <router-link class="nav-link" to="/weth">Погода</router-link>
+    </li>
 
-<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark"></nav> -->
-<a href="#" class="navbar-brand">
-  <img src="https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto/gigs/104778812/original/297c4b578930cfd9f9bc21952eb7e74534d60369/develop-nodejs-express-mongodb-vue-application-using-mevn.jpg" alt="logo">
-</a>
+     <li class="nav-item">
+      <router-link class="nav-link" to="/val">Курс криптовалют</router-link>
+    </li>
+    <li class="nav-item">
+      <router-link class="nav-link" to="/">Выход</router-link>
+    </li>
+  </ul>
 
-  </div>
+</nav>
+   </div>
 </template>
 
 <script>
 export default {
-  name: 'Info',
+  name: 'Acc',
+
   data(){
       return{
-          info:"Your acc"
+          info:"Little App",   
+          }},
+           methods:{
+            Exit(){
+              this.$router.push("/")
+            }
       }
   }
-}
+
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+
 </style>
