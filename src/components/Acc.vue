@@ -10,10 +10,9 @@
       <router-link class="nav-link" to="/val">Курс криптовалют</router-link>
     </li>
     <li class="nav-item">
-      <router-link class="nav-link" to="/">Выход</router-link>
+      <router-link class="nav-link exit" to="/">Выход</router-link>
     </li>
   </ul>
-
 </nav>
    </div>
 </template>
@@ -36,5 +35,7 @@ export default {
 </script>
 
 <style scoped>
-
+.exit{
+  right: -200;;
+}
 </style>
